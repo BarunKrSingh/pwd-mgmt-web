@@ -1,4 +1,4 @@
-﻿body {
+body {
   background-color: #EEEEFF;
   font-family: Verdana;
   font-size: 14px;
@@ -28,6 +28,21 @@ label {
 
 div.input {
   margin: 7px 0;
+}
+
+div.success {
+  color: Green;
+}
+
+div.tableborder {
+    border-style: solid;
+    border-width: 1px;
+    color: Green
+}
+div.errormessage {
+	border-style: solid;
+    border-width: 1px;
+    color: Red
 }
 
 input.textbox {
@@ -93,10 +108,10 @@ h2 {
 }
 
 h3 {
-  margin: 0;
-  padding: 0;
-  font-variant: small-caps;
+  padding: 10px 0 0 10px; 
+  margin: 0;  
   font-size: 13px;
+  	font-family: Arial;
 }
 
 .navigation {

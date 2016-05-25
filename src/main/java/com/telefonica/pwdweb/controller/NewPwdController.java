@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.telefonica.pwdweb.model.Message;
 import com.telefonica.pwdweb.service.PasswordManagementService;
@@ -42,7 +43,7 @@ public class NewPwdController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("newpwd") Message message,
+	public ModelAndView processSubmit(@ModelAttribute("newpwd") Message message,
 			BindingResult result, HttpServletRequest request) {
 		
 		logger.info("Validatig the userID with captcha");
@@ -50,23 +51,24 @@ public class NewPwdController {
 		validator.validate(message, result);
 
 		if (result.hasErrors()) {
-			return "newpwd";
+			return new ModelAndView("newpwd");
 		} else {
 			HttpSession session = request.getSession();
-			if (session != null) {
-				saveMessage(session, message.getUserId());
+			if (session != null) {				
 				GenerateNewPwdResponse response = pwdManageService.generateNewPassword(message.getUserId());
 				session.removeAttribute("captchaVerified");
-				return "redirect:messages.htm";
+				ModelAndView model =null;
+				if(response.getOperationResponse().getCode()==0){
+					model = new ModelAndView("newpwdsuccess");
+					model.addObject("operationResponse",response.getOperationResponse());
+				}else{
+					model = new ModelAndView("newpwd");
+					model.addObject("operationResponse", response.getOperationResponse());
+				}
+				return model;
 			} else {
-				return "newpwd";
+				return new ModelAndView("newpwd");
 			}
 		}
-	}
-
-	private void saveMessage(HttpSession session, String userId) {
-		Date timeStamp = new Date();
-		String message = userId + " says: " + "Test...";
-		session.setAttribute("Message_" + timeStamp.getTime(), message);
-	}
+	}	
 }
