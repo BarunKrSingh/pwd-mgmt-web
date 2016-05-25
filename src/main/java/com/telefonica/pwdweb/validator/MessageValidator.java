@@ -3,6 +3,7 @@ package com.telefonica.pwdweb.validator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -11,6 +12,7 @@ import botdetect.web.Captcha;
 
 import com.telefonica.pwdweb.model.Message;
 
+@Component
 public class MessageValidator implements Validator {
 
   public boolean supports(Class type) {

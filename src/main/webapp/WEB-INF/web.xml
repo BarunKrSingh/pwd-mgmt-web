@@ -20,18 +20,7 @@
     <servlet-name>appServlet</servlet-name>
     <url-pattern>*.htm</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>BotDetect Captcha</servlet-name>
-    <servlet-class>botdetect.web.http.CaptchaServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>BotDetect Captcha</servlet-name>
-    <url-pattern>/botdetectcaptcha</url-pattern>
-  </servlet-mapping>
-  <context-param>
-    <param-name>LBD_helpLinkMode</param-name>
-    <param-value>image</param-value>
-  </context-param>
+    
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

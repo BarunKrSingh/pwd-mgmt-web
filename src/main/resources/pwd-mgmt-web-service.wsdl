@@ -1,0 +1,97 @@
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:sch="http://telefonica.com/pwd.mgmt.webservice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://telefonica.com/pwd.mgmt.webservice" targetNamespace="http://telefonica.com/pwd.mgmt.webservice">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified" targetNamespace="http://telefonica.com/pwd.mgmt.webservice">
+			<xs:element name="changePwdRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="userId" type="xs:string" />
+						<xs:element name="currentPassword" type="xs:string" />
+						<xs:element name="newPassword" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="changePwdResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="operationResponse" type="tns:operationResponse" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="generateNewPwdRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="userId" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="generateNewPwdResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="operationResponse" type="tns:operationResponse" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="operationResponse">
+				<xs:sequence>
+					<xs:element name="code" type="xs:int" />
+					<xs:element name="description" type="xs:string" />
+					<xs:element name="remainingPasswordAttempts" type="xs:string" />
+					<xs:element name="currentPasswordExpirationDate" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="generateNewPwdResponse">
+		<wsdl:part element="tns:generateNewPwdResponse" name="generateNewPwdResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="changePwdResponse">
+		<wsdl:part element="tns:changePwdResponse" name="changePwdResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="changePwdRequest">
+		<wsdl:part element="tns:changePwdRequest" name="changePwdRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="generateNewPwdRequest">
+		<wsdl:part element="tns:generateNewPwdRequest" name="generateNewPwdRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="PasswordPort">
+		<wsdl:operation name="generateNewPwd">
+			<wsdl:input message="tns:generateNewPwdRequest" name="generateNewPwdRequest"></wsdl:input>
+			<wsdl:output message="tns:generateNewPwdResponse" name="generateNewPwdResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="changePwd">
+			<wsdl:input message="tns:changePwdRequest" name="changePwdRequest"></wsdl:input>
+			<wsdl:output message="tns:changePwdResponse" name="changePwdResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PasswordPortSoap11" type="tns:PasswordPort">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="generateNewPwd">
+			<soap:operation soapAction="" />
+			<wsdl:input name="generateNewPwdRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="generateNewPwdResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="changePwd">
+			<soap:operation soapAction="" />
+			<wsdl:input name="changePwdRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="changePwdResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PasswordPortService">
+		<wsdl:port binding="tns:PasswordPortSoap11" name="PasswordPortSoap11">
+			<soap:address location="http://localhost:9090/ws" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -8,14 +8,14 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>New Password web form</title>
+    <title>New Password Web Form</title>
     <link rel="stylesheet" href="resources/css/style.css" type="text/css"/>
   </head>
 
   <body>
     <h1>Optimización de Aplicaciones Solicitud de nueva contraseña</h1>
 
-    <form:form commandName="index" method="post">
+    <form:form commandName="newpwd" method="post">
       <fieldset>
         <!-- <legend>CAPTCHA included in Spring MVC form validation</legend> -->
         <div class="input">
