@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import botdetect.web.Captcha;
@@ -20,12 +21,17 @@ public class MessageValidator implements Validator {
 
     Message message = (Message)o;
     
-    if(!isValidUserId(message.getUserId())){
-      errors.rejectValue("userId", "length", "UserID format should be of email type");
-    }  
+    if(null !=message.getUserId() && !message.getUserId().isEmpty() && !isValidUserId(message.getUserId())){
+    	errors.rejectValue("userId", "invalid.userId");
+    }
+    else
+    {
+    	ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userId", "empty.userId");
+    }
     
-    if(!isCaptchaValid(message.getRequest(),message.getCaptchaCodeTextBox())){
-      errors.rejectValue("captchaCodeTextBox", "captcha", "*");
+    if(!isCaptchaValid(message.getRequest(), message.getCaptchaCodeTextBox())){
+      //errors.rejectValue("captchaCodeTextBox", "captcha", "*");
+    	errors.rejectValue("userCaptchaCode", "empty.captchaValue");
     }
   }
 

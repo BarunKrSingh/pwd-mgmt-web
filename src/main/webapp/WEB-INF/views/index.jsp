@@ -32,9 +32,10 @@
               imageWidth="150"
               imageStyles="graffiti, graffiti2"/>
           <div class="validationDiv">
-            <input id="captchaCodeTextBox" type="text" 
-                name="captchaCodeTextBox" 
-                value="${message.captchaCodeTextBox}"/><br>
+            <input id="userCaptchaCode" type="text" 
+                name="userCaptchaCode" 
+                value="${message.userCaptchaCode}"/><br>
+                <form:errors path="userCaptchaCode" cssClass="incorrect"/>
           </div>
         </c:if>
         <input type="submit" name="Confirmar" value="Confirmar" />&nbsp;
