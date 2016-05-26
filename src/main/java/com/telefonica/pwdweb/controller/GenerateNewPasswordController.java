@@ -16,35 +16,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.telefonica.pwdweb.model.Message;
+import com.telefonica.pwdweb.model.NewPassword;
 import com.telefonica.pwdweb.service.PasswordManagementService;
-import com.telefonica.pwdweb.validator.MessageValidator;
+import com.telefonica.pwdweb.validator.NewPasswordValidator;
 import com.telefonica.pwdweb.wsdlimported.GenerateNewPwdResponse;
 import com.telefonica.pwdweb.wsdlimported.OperationResponse;
 
 @Controller
 @RequestMapping(value="newpwd.htm")
-public class NewPwdController {
+public class GenerateNewPasswordController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(NewPwdController.class);
+	private static final Logger logger = LoggerFactory.getLogger(GenerateNewPasswordController.class);
 
 	@Autowired
-	private MessageValidator validator;
+	private NewPasswordValidator validator;
 	
 	@Autowired
 	private PasswordManagementService pwdManageService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String  initForm(ModelMap model, HttpServletRequest request) {
-		Message message = new Message();
+		NewPassword message = new NewPassword();
 		message.setRequest(request);
 		model.addAttribute("newpwd", message);		
 		return "newpwd";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("newpwd") Message message,
-			BindingResult result, HttpServletRequest request) {
+	public ModelAndView processSubmit(@ModelAttribute("newpwd") NewPassword message, BindingResult result, HttpServletRequest request) {
 		
 		logger.info("Validatig the userID with captcha");
 		message.setRequest(request);
@@ -52,22 +51,25 @@ public class NewPwdController {
 
 		if (result.hasErrors()) {
 			return new ModelAndView("newpwd");
-		} else {
+		} else
+		{			
 			HttpSession session = request.getSession();
+			ModelAndView modelAndView = new ModelAndView();
 			if (session != null) {				
 				GenerateNewPwdResponse response = pwdManageService.generateNewPassword(message.getUserId());
 				session.removeAttribute("captchaVerified");
-				ModelAndView model =null;
+				
 				if(response.getOperationResponse().getCode()==0){
-					model = new ModelAndView("newpwdsuccess");
-					model.addObject("operationResponse",response.getOperationResponse());
+					modelAndView.setViewName("newpwdsuccess");
+					modelAndView.addObject("operationResponse",response.getOperationResponse());
 				}else{
-					model = new ModelAndView("newpwd");
-					model.addObject("operationResponse", response.getOperationResponse());
+					modelAndView.setViewName("newpwd");
+					modelAndView.addObject("operationResponse", response.getOperationResponse());
 				}
-				return model;
-			} else {
-				return new ModelAndView("newpwd");
+				return modelAndView;
+			} else {	
+				modelAndView.setViewName("newpwd");
+				return modelAndView;
 			}
 		}
 	}	

@@ -29,9 +29,6 @@
 	<beans:bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<beans:property name="basename" value="validation" />
-	</beans:bean>
-
-	<beans:bean name="/messages.htm"
-		class="com.telefonica.pwdweb.controller.MessagesController" />
+	</beans:bean>	
 		
 </beans:beans>

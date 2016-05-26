@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>New Password Web Form</title>
+<title>Telefonica Password Management</title>
 <link rel="stylesheet" href="resources/css/style.css" type="text/css" />
 </head>
 
@@ -17,10 +17,8 @@
 		<h1>
 			Optimización de Aplicaciones<br>
 			<c:choose>
-				<c:when test="${operationResponse.code=='1'}">
-					<div class="warning">Error en solicitud de nueva contraseña</div>
-				</c:when>
-				<c:when test="${operationResponse.code=='2'}">
+				<c:when
+					test="${operationResponse.code=='1' || operationResponse.code=='2'} ">
 					<div class="warning">Error en solicitud de nueva contraseña</div>
 				</c:when>
 				<c:otherwise>			
@@ -30,14 +28,7 @@
 		</h1>
 		<br>
 		<c:if test="${not empty operationResponse}">
-			<c:choose>
-				<c:when test="${operationResponse.code=='1'}">
-					<div class="errormessage">${operationResponse.description}</div>
-				</c:when>
-				<c:when test="${operationResponse.code=='2'}">
-					<div class="errormessage">${operationResponse.description}</div>
-				</c:when>
-			</c:choose>
+			<div class="errormessage">${operationResponse.description}</div>
 		</c:if>
 
 		<h3>
@@ -47,7 +38,6 @@
 		</h3>
 
 		<form:form commandName="newpwd" method="post">
-			<!-- <legend>CAPTCHA included in Spring MVC form validation</legend> -->
 			<div class="input">
 				<label for="userId">Usuario:</label>
 				<form:input path="userId" cssClass="textbox" />
@@ -59,7 +49,7 @@
 					code from the picture:</label>
 				<!-- Adding BotDetect Captcha to the page -->
 				<botDetect:captcha id="springFormCaptcha" codeLength="3"
-					imageWidth="150" imageStyles="graffiti, graffiti2" />
+					imageWidth="150" imageStyles="graffiti" />
 				<div class="validationDiv">
 					<input id="userCaptchaCode" type="text" name="userCaptchaCode"
 						value="${message.userCaptchaCode}" /><br>

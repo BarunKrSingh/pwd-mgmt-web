@@ -31,13 +31,13 @@ div.input {
 }
 
 div.success {
-  color: Green;
+  color: rgba(0,255,0,0.3);
 }
 
 div.tableborder {
     border-style: solid;
     border-width: 1px;
-    color: Green
+    color: rgba(0,255,0,0.3)
 }
 div.errormessage {
 	border-style: solid;

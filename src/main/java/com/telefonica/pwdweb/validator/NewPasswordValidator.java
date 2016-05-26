@@ -10,18 +10,18 @@ import org.springframework.validation.Validator;
 
 import botdetect.web.Captcha;
 
-import com.telefonica.pwdweb.model.Message;
+import com.telefonica.pwdweb.model.NewPassword;
 
 @Component
-public class MessageValidator implements Validator {
+public class NewPasswordValidator implements Validator {
 
   public boolean supports(Class type) {
-    return Message.class.isAssignableFrom(type);
+    return NewPassword.class.isAssignableFrom(type);
   }
 
   public void validate(Object o, Errors errors) {
 
-    Message message = (Message)o;
+    NewPassword message = (NewPassword)o;
     
     if(null !=message.getUserId() && !message.getUserId().isEmpty() && !isValidUserId(message.getUserId())){
     	errors.rejectValue("userId", "invalid.userId");
@@ -31,8 +31,7 @@ public class MessageValidator implements Validator {
     	ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userId", "empty.userId");
     }
     
-    if(!isCaptchaValid(message.getRequest(), message.getCaptchaCodeTextBox())){
-      //errors.rejectValue("captchaCodeTextBox", "captcha", "*");
+    if(!isCaptchaValid(message.getRequest(), message.getCaptchaCodeTextBox())){      
     	errors.rejectValue("userCaptchaCode", "empty.captchaValue");
     }
   }

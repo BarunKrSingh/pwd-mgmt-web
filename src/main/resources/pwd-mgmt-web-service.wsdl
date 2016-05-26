@@ -91,7 +91,7 @@
 	</wsdl:binding>
 	<wsdl:service name="PasswordPortService">
 		<wsdl:port binding="tns:PasswordPortSoap11" name="PasswordPortSoap11">
-			<soap:address location="http://localhost:9090/ws" />
+			<soap:address location="http://localhost:80/ws" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

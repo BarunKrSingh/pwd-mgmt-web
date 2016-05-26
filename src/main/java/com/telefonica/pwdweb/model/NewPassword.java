@@ -3,7 +3,7 @@ package com.telefonica.pwdweb.model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class Message {
+public class NewPassword {
 
 	private String userId;
 	private String userCaptchaCode;

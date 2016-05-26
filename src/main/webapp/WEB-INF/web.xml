@@ -20,6 +20,18 @@
     <servlet-name>appServlet</servlet-name>
     <url-pattern>*.htm</url-pattern>
   </servlet-mapping>
+  
+  <!-- Audio CAPTCHA Sound Format -->
+  <context-param>
+      <param-name>LBD_soundFormat</param-name>
+      <param-value>WavPcm8bit8kHzMono</param-value>
+  </context-param>
+  
+  <!-- Disabling Audio CAPTCHA -->
+  <!-- <context-param>
+      <param-name>LBD_soundEnabled</param-name>
+      <param-value>false</param-value>
+  </context-param> -->
     
   <session-config>
     <session-timeout>30</session-timeout>
