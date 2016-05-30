@@ -21,14 +21,14 @@
 		<br>
 		<c:if test="${not empty operationResponse}">
 			<div class="errormessage">
-				Ha superado el número de reintentos permitido, razón<br> por la
-				cual su cuenta de usuario ha sido bloqueada.<br> Para
-				desbloquear su cuenta debe generar una nueva<br> contraseña a
-				través de la opción <b>Resetear contraseña</b>.
+				Ha superado el número de reintentos permitido, razón<br>
+				por la cual su cuenta de usuario ha sido bloqueada.<br>
+				Para desbloquear su cuenta debe generar una nueva<br>
+				contraseña a través de la opción <b>Resetear contraseña</b>.
 			</div>
 		</c:if>
-		
-		<a href="http://localhost:8083/pwdweb/newpwd.htm"><b>Resetear contraseña</b></a>
+		<br>
+		<a href="${pageContext.request.contextPath}/newpwd.htm"><b>Generar nueva contraseña</b></a>&nbsp;&nbsp;
 
 	</fieldset>
 </body>

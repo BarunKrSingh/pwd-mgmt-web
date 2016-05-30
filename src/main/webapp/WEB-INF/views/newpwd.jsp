@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="botDetect" uri="botDetect"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -8,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Telefonica Password Management</title>
+<title>Telefonica User Management</title>
 <link rel="stylesheet" href="resources/css/style.css" type="text/css" />
 </head>
 
@@ -18,7 +19,7 @@
 			Optimización de Aplicaciones<br>
 			<c:choose>
 				<c:when
-					test="${operationResponse.code=='1' || operationResponse.code=='2'} ">
+					test="${operationResponse.code=='1' || operationResponse.code=='2'}">
 					<div class="warning">Error en solicitud de nueva contraseña</div>
 				</c:when>
 				<c:otherwise>			
@@ -28,7 +29,18 @@
 		</h1>
 		<br>
 		<c:if test="${not empty operationResponse}">
-			<div class="errormessage">${operationResponse.description}</div>
+			<div class="errormessage">
+				<c:choose>			   
+					<c:when test="${operationResponse.code=='1'}">					
+							Se ha producido un error inesperado.<br> 
+							Por favor, reinténtelo más tarde.											
+					</c:when>
+					<c:otherwise>							
+						El identificador de usuario introducido no es válido.<br>
+						Por favor reinténtelo de nuevo.			
+					</c:otherwise>			
+				</c:choose>	
+			</div>			
 		</c:if>
 
 		<h3>
@@ -40,13 +52,12 @@
 		<form:form commandName="newpwd" method="post">
 			<div class="input">
 				<label for="userId">Usuario:</label>
-				<form:input path="userId" cssClass="textbox" />
+				<form:input path="userId" cssClass="textbox" autocomplete="true" />
 				<br>
 				<form:errors path="userId" cssClass="incorrect" />
 			</div>
 			<c:if test="${!index.captchaVerified}">
-				<label for="captchaCodeTextBox" class="prompt"> Retype the
-					code from the picture:</label>
+				<label for="captchaCodeTextBox" class="prompt"> Vuelva a escribir el código de la imagen</label>
 				<!-- Adding BotDetect Captcha to the page -->
 				<botDetect:captcha id="springFormCaptcha" codeLength="3"
 					imageWidth="150" imageStyles="graffiti" />

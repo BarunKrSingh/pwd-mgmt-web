@@ -10,15 +10,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import com.telefonica.pwdweb.constants.CommonConstants;
 import com.telefonica.pwdweb.controller.GenerateNewPasswordController;
 import com.telefonica.pwdweb.model.ChangePassword;
 
 @Component
 public class ChangePasswordValidator implements Validator {
 	
-	private static final Logger logger = LoggerFactory.getLogger(GenerateNewPasswordController.class);
-
-	private static final int MINIMUM_PASSWORD_LENGTH = 8;
+	private static final Logger logger = LoggerFactory.getLogger(GenerateNewPasswordController.class);	
 	
 	public boolean supports(Class<?> paramClass) {
 		return ChangePassword.class.equals(paramClass);
@@ -26,55 +25,44 @@ public class ChangePasswordValidator implements Validator {
 
 	public void validate(Object obj, Errors errors) {
 		
-		/*ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userId", "valid.emptyEmailId");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newPassword", "valid.newPassword");		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newPasswordConf", "valid.newPasswordConf");*/
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userId", "empty.userId");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword", "empty.currentPassword");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newPassword", "empty.newPassword");		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newPasswordConf", "empty.newPasswordConf");				
 		
-		String emailidregex= "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		ChangePassword chgpwd = (ChangePassword) obj;		
 		
-		ChangePassword chgpwd = (ChangePassword) obj;
-		String regex = "^[a-zA-Z0-9]+$";
+		Pattern newPasswordPattern = Pattern.compile(CommonConstants.PASSWORD_PATTERN);
+		Matcher newPasswordMatcher= newPasswordPattern.matcher(chgpwd.getNewPassword());
 		
-		Pattern pattern=Pattern.compile(regex);
-		Matcher matcher= pattern.matcher(chgpwd.getNewPassword());
+		Pattern userIdPattern = Pattern.compile(CommonConstants.USER_ID_PATTERN);
 		
-		Pattern emailpattern=Pattern.compile(emailidregex);
-		Matcher emailmatcher= emailpattern.matcher(chgpwd.getUserId());
-		if(emailmatcher.matches())
+		if(!chgpwd.getUserId().isEmpty() && null !=chgpwd.getUserId())
 		{			
-			if(chgpwd.getCurrentPassword().length()==0)
-			{
-				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword", "valid.currentPassword");
+			Matcher userIdMatcher = userIdPattern.matcher(chgpwd.getUserId());
+			if(userIdMatcher.matches())
+			{	
+				if(!chgpwd.getNewPassword().isEmpty())
+				{
+					if(newPasswordMatcher.matches() && chgpwd.getNewPassword().trim().length() >= CommonConstants.MINIMUM_PASSWORD_LENGTH)
+					{
+						if (!chgpwd.getNewPasswordConf().isEmpty() && !chgpwd.getNewPassword().equals(chgpwd.getNewPasswordConf())) 
+						{
+							errors.rejectValue("newPasswordConf", "invalid.passwordConfDiff");
+						}			
+					}
+					else
+					{
+						errors.rejectValue("newPassword", "invalid.newPassword"); 
+					}
+				}
+							
 			}
 			else 
 			{
-				
-			
-				if(matcher.matches())
-				{
-					if (chgpwd.getNewPassword() != null && chgpwd.getNewPassword().trim().length() == MINIMUM_PASSWORD_LENGTH) 
-					{
-						 if (!chgpwd.getNewPassword().equals(chgpwd.getNewPasswordConf())) 
-						{
-							 errors.rejectValue("newPasswordConf", "valid.passwordConfDiff");
-						}
-				    }
-					else
-					{
-						errors.rejectValue("newPassword", "valid.passwordLength");
-					}			
-				}
-				else
-				{
-					errors.rejectValue("newPassword", "valid.passwordPattern"); 
-	
-				}	
-			}
+				errors.rejectValue("userId", "invalid.userId");
+			} 
 		}
-		else 
-		{
-			errors.rejectValue("userId", "valid.emailId");
-		} 
+		
 	}
 }

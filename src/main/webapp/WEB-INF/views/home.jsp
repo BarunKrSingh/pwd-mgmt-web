@@ -8,26 +8,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>New Password Generated</title>
+<title>Telefonica Password Management</title>
 <link rel="stylesheet" href="resources/css/style.css" type="text/css" />
 </head>
 
-<body>
-	<fieldset>
-		<h1>
-			Optimización de Aplicaciones <br>
-			<div class="success">Nueva contraseña generada</div>
+<body>	
+	<fieldset>	
+		<h1 align="center">
+			Optimización de Aplicaciones			
 		</h1>
 		<br>
-		<c:if test="${not empty operationResponse}">
-			<div class="resultbox">
-				Su nueva contraseña se ha generado con éxito. En<br>
-				breve la recibirá a través del correo electrónico.<br>
-				Pulse Continuar para volver al servicio e introducir sus<br>
-				nuevas credenciales.			
-			</div>
-		</c:if>
+		<br>
 
-	</fieldset>
+		<a href="${pageContext.request.contextPath}/newpwd.htm">Generar nueva contraseña</a><br>
+		<br>
+		<a href="${pageContext.request.contextPath}/chgpwd.htm">Modificación de contraseña</a>	
+	</fieldset>	
 </body>
 </html>

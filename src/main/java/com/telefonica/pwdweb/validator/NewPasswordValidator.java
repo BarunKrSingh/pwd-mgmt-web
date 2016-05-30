@@ -10,6 +10,7 @@ import org.springframework.validation.Validator;
 
 import botdetect.web.Captcha;
 
+import com.telefonica.pwdweb.constants.CommonConstants;
 import com.telefonica.pwdweb.model.NewPassword;
 
 @Component
@@ -40,7 +41,7 @@ public class NewPasswordValidator implements Validator {
 	  if(userId == null){
 	      return false;
 	    }
-	    return userId.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
+	    return userId.matches(CommonConstants.USER_ID_PATTERN);
   }  
 
   private boolean isCaptchaValid(HttpServletRequest request, 

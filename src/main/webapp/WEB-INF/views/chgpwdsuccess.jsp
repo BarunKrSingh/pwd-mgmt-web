@@ -20,9 +20,12 @@
 		</h1>
 		<br>
 		<c:if test="${not empty operationResponse}">
-			<div class="tableborder">Su nueva contraseña se ha generado con éxito. En<br>
+			<div class="resultbox">Su nueva contraseña se ha generado con éxito. En<br>
 			breve la recibirá a través del correo electrónico.<br>
-			Su nueva contraseña será válida hasta el ${operationResponse.currentPasswordExpirationDate}</div>
+			Su nueva contraseña será válida hasta el <b>${operationResponse.currentPasswordExpirationDate}.</b><br>
+			Pulse Continuar para volver al servicio e introducir sus<br>
+			nuevas credenciales.
+			</div>
 		</c:if>
 
 	</fieldset>
