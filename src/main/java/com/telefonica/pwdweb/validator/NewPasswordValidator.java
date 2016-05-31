@@ -3,6 +3,8 @@ package com.telefonica.pwdweb.validator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -11,10 +13,13 @@ import org.springframework.validation.Validator;
 import botdetect.web.Captcha;
 
 import com.telefonica.pwdweb.constants.CommonConstants;
+import com.telefonica.pwdweb.controller.GenerateNewPasswordController;
 import com.telefonica.pwdweb.model.NewPassword;
 
 @Component
 public class NewPasswordValidator implements Validator {
+	
+  private static final Logger logger = LoggerFactory.getLogger(GenerateNewPasswordController.class);
 
   public boolean supports(Class type) {
     return NewPassword.class.isAssignableFrom(type);
@@ -23,6 +28,8 @@ public class NewPasswordValidator implements Validator {
   public void validate(Object o, Errors errors) {
 
     NewPassword message = (NewPassword)o;
+    
+    logger.info("Performing the field level validation for new password generation operation for the user:{}",message.getUserId());
     
     if(null !=message.getUserId() && !message.getUserId().isEmpty() && !isValidUserId(message.getUserId())){
     	errors.rejectValue("userId", "invalid.userId");

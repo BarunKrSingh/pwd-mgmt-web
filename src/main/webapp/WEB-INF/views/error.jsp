@@ -13,7 +13,8 @@
 	<div class="container">
 		<br /> <br /> <br />
 		<div class="span6 offset3 center">
-			<span class="alert alert-error"> Se ha producido un error inesperado.Por favor, reinténtelo más tarde.
+			<span class="alert alert-error"> Se ha producido un error inesperado.
+			Por favor,reinténtelo más tarde.
 			 </span> <br /> <br /> 
 				<a href="${pageContext.request.contextPath}/home.htm">página principal</a>
 		</div>

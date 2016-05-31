@@ -201,10 +201,10 @@ h3 {
 .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 940px;
+  width: 1080px;
 }
 .span6 {
-  width: 460px;
+  width: 560px;
 }
 .offset3 {
   margin-left: 260px;

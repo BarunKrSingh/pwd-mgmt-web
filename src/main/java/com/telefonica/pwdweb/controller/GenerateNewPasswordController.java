@@ -18,10 +18,10 @@ import com.telefonica.pwdweb.constants.ControllerActions;
 import com.telefonica.pwdweb.model.NewPassword;
 import com.telefonica.pwdweb.service.PasswordManagementService;
 import com.telefonica.pwdweb.validator.NewPasswordValidator;
-import com.telefonica.pwdweb.wsdlimported.GenerateNewPwdResponse;
+import com.telefonica.pwdweb.wsdlimported.OperationResponse;
 
 @Controller
-@RequestMapping(value="newpwd")
+@RequestMapping(value=ControllerActions.GENERATE_NEW_PASSWORD)
 public class GenerateNewPasswordController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GenerateNewPasswordController.class);
@@ -41,11 +41,11 @@ public class GenerateNewPasswordController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("newpwd") NewPassword newpassword, BindingResult result, HttpServletRequest request) {
+	public ModelAndView processSubmit(@ModelAttribute("newpwd") NewPassword newPassword, BindingResult result, HttpServletRequest request) {
 		
-		logger.info("Validatig the userID with captcha");
-		newpassword.setRequest(request);
-		validator.validate(newpassword, result);
+		logger.info("Processing the new password generation request for the user:{}",newPassword.getUserId());
+		newPassword.setRequest(request);
+		validator.validate(newPassword, result);
 		if (result.hasErrors()) {
 			return new ModelAndView(ControllerActions.GENERATE_NEW_PASSWORD);
 		} else
@@ -53,15 +53,17 @@ public class GenerateNewPasswordController {
 			HttpSession session = request.getSession();
 			ModelAndView modelAndView = new ModelAndView();
 			if (session != null) {				
-				GenerateNewPwdResponse response = pwdManageService.generateNewPassword(newpassword.getUserId());
+				OperationResponse operationResponse = pwdManageService.generateNewPassword(newPassword.getUserId());
 				session.removeAttribute("captchaVerified");
 				
-				if(response.getOperationResponse().getCode()==0){
-					modelAndView.setViewName("newpwdsuccess");
-					modelAndView.addObject("operationResponse",response.getOperationResponse());
+				if(0 == operationResponse.getCode()){
+					modelAndView.setViewName(ControllerActions.GENERATE_NEW_PASSWORD_SUCCESS);
+					modelAndView.addObject("operationResponse",operationResponse);
+					logger.debug("Successfully generated the new password for the user:{}",newPassword.getUserId());
 				}else{
 					modelAndView.setViewName(ControllerActions.GENERATE_NEW_PASSWORD);
-					modelAndView.addObject("operationResponse", response.getOperationResponse());
+					modelAndView.addObject("operationResponse", operationResponse);
+					logger.debug("New password could not be generated successfully for the user: {}",newPassword.getUserId());
 				}
 				return modelAndView;
 			} else {	

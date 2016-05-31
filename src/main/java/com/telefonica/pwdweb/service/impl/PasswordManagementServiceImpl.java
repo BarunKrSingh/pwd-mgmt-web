@@ -22,20 +22,20 @@ public class PasswordManagementServiceImpl implements PasswordManagementService{
 	private WebServiceTemplate passwordWebServiceTemplate;
 
 	@Override
-	public GenerateNewPwdResponse generateNewPassword(String userId) {
+	public OperationResponse generateNewPassword(String userId) {
 		
 		logger.info("Generating new password for the user:{}",userId);
 		
-		GenerateNewPwdResponse response = null;
+		GenerateNewPwdResponse generateNewPwdResponse = null;
 		GenerateNewPwdRequest newPwdRequest = new GenerateNewPwdRequest();
 		
 		try {						
 			newPwdRequest.setUserId(userId);
-			response = (GenerateNewPwdResponse) passwordWebServiceTemplate.marshalSendAndReceive(newPwdRequest);			
+			generateNewPwdResponse = (GenerateNewPwdResponse) passwordWebServiceTemplate.marshalSendAndReceive(newPwdRequest);			
 		} catch (Exception e) {
-			logger.error("Exception occured invoking the the SOAP based service for new password genearion for the user:{} due to: {}",userId,e);
+			logger.error("Exception occured processing the SOAP request for new password genearion for the user:{} due to: {}",userId,e);
 		}
-		return response;
+		return generateNewPwdResponse.getOperationResponse();
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class PasswordManagementServiceImpl implements PasswordManagementService{
 			changePwdResponse = (ChangePwdResponse) passwordWebServiceTemplate.marshalSendAndReceive(changePwdRequest);			
 			
 		} catch (Exception e) {
-			logger.error("Exception occured invoking the the SOAP based service for existing password change operation for the user:{} due to: {}",userId,e);
+			logger.error("Exception occured processing the SOAP request for new password genearion for the user:{} due to: {}",userId,e);
 		}		
 		return changePwdResponse.getOperationResponse();
 		

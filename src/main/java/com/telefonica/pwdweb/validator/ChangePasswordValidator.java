@@ -25,12 +25,16 @@ public class ChangePasswordValidator implements Validator {
 
 	public void validate(Object obj, Errors errors) {
 		
+		ChangePassword chgpwd = (ChangePassword) obj;	
+		
+		logger.info("Performing the field level validation for change password operation for the user:{}",chgpwd.getUserId());
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userId", "empty.userId");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword", "empty.currentPassword");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newPassword", "empty.newPassword");		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newPasswordConf", "empty.newPasswordConf");				
 		
-		ChangePassword chgpwd = (ChangePassword) obj;		
+			
 		
 		Pattern newPasswordPattern = Pattern.compile(CommonConstants.PASSWORD_PATTERN);
 		Matcher newPasswordMatcher= newPasswordPattern.matcher(chgpwd.getNewPassword());

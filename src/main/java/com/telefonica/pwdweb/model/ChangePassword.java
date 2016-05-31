@@ -1,82 +1,69 @@
 package com.telefonica.pwdweb.model;
 
-
-/**
- * @author satyak
- *
- */
 public class ChangePassword {
-		
-	    private String userId;
-	    
-	    private String currentPassword;
-	    
-	    private String newPassword;
-		
-		private String newPasswordConf;
-		
-		private String authenticationfails;
-		
-		private String date;
-		
-		private String captcha;
 
-		public String getCaptcha() {
-			return captcha;
-		}
+	private String userId;
+	private String currentPassword;
+	private String newPassword;
+	private String newPasswordConf;
+	private String authenticationfails;
+	private String date;
+	private String captcha;
 
-		public void setCaptcha(String captcha) {
-			this.captcha = captcha;
-		}
+	public String getCaptcha() {
+		return captcha;
+	}
 
-		public String getUserId() {
-			return userId;
-		}
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
+	}
 
-		public void setUserId(String userId) {
-			this.userId = userId;
-		}
+	public String getUserId() {
+		return userId;
+	}
 
-		public String getCurrentPassword() {
-			return currentPassword;
-		}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-		public void setCurrentPassword(String currentPassword) {
-			this.currentPassword = currentPassword;
-		}
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
 
-		public String getNewPassword() {
-			return newPassword;
-		}
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
 
-		public void setNewPassword(String newPassword) {
-			this.newPassword = newPassword;
-		}
+	public String getNewPassword() {
+		return newPassword;
+	}
 
-		public String getNewPasswordConf() {
-			return newPasswordConf;
-		}
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
 
-		public void setNewPasswordConf(String newPasswordConf) {
-			this.newPasswordConf = newPasswordConf;
-		}
+	public String getNewPasswordConf() {
+		return newPasswordConf;
+	}
 
-		public String getAuthenticationfails() {
-			return authenticationfails;
-		}
+	public void setNewPasswordConf(String newPasswordConf) {
+		this.newPasswordConf = newPasswordConf;
+	}
 
-		public void setAuthenticationfails(String authenticationfails) {
-			this.authenticationfails = authenticationfails;
-		}
+	public String getAuthenticationfails() {
+		return authenticationfails;
+	}
 
-		public String getDate() {
-			return date;
-		}
+	public void setAuthenticationfails(String authenticationfails) {
+		this.authenticationfails = authenticationfails;
+	}
 
-		public void setDate(String date) {
-			this.date = date;
-		}
-		
-	  
-		
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 }
